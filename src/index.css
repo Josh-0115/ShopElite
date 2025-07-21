@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+/* Custom styles for !rounded-button if needed */
+.rounded-button {
+  border-radius: 0.375rem; /* Example radius */
+}
