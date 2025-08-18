@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { CartContext } from './CartContext';
 
-const Header = ({ cartCount, onCartClick }) => {
+const Header = ({ cartCount }) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
@@ -85,8 +85,8 @@ const Header = ({ cartCount, onCartClick }) => {
             </div>
 
             {/* Cart Icon */}
-            <button
-              onClick={onCartClick}
+            <Link
+              to="/cart"
               className="relative text-gray-600 hover:text-gray-900"
             >
               <i className="fas fa-shopping-cart text-lg"></i>
@@ -95,7 +95,7 @@ const Header = ({ cartCount, onCartClick }) => {
                   {cartCount}
                 </span>
               )}
-            </button>
+            </Link>
           </div>
         </div>
       </div>

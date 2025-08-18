@@ -5,7 +5,6 @@ import Footer from './Footer';
 import Newsletter from './Newsletter';
 import { useContext } from 'react';
 import { CartContext } from './CartContext';
-import Cart from './cart';
 import womenbg from '../assets/images/women/women-bg.jpg'
 
 

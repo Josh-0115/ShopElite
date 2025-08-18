@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useCallback, useMemo } from 'react';
 
 export const CartContext = createContext();
 
@@ -15,7 +15,7 @@ export const CartProvider = ({ children }) => {
     setCartCount(totalItems);
   }, [cartItems]);
 
-  const handleAddToCart = (product) => {
+  const handleAddToCart = useCallback((product) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find(
         (item) => item.id === product.id && item.gender === product.gender
@@ -26,13 +26,12 @@ export const CartProvider = ({ children }) => {
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
-      } else {
-        return [...prevItems, { ...product, quantity: 1 }];
       }
+      return [...prevItems, { ...product, quantity: 1 }];
     });
-  };
+  }, []);
 
-  const increaseQuantity = (id, gender) => {
+  const increaseQuantity = useCallback((id, gender) => {
     setCartItems((prevItems) =>
       prevItems.map((item) =>
         item.id === id && item.gender === gender
@@ -40,40 +39,38 @@ export const CartProvider = ({ children }) => {
           : item
       )
     );
-  };
+  }, []);
 
-  const decreaseQuantity = (id, gender) => {
+  const decreaseQuantity = useCallback((id, gender) => {
     setCartItems((prevItems) =>
-      prevItems.reduce((acc, item) => {
-        if (item.id === id && item.gender === gender) {
-          if (item.quantity > 1) {
-            acc.push({ ...item, quantity: item.quantity - 1 });
-          }
-        } else {
-          acc.push(item);
-        }
-        return acc;
-      }, [])
+      prevItems.map((item) =>
+        item.id === id && item.gender === gender && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      ).filter((item) => item.quantity > 0) // Remove item if quantity becomes 0
     );
-  };
+  }, []);
 
-  const removeItem = (id, gender) => {
+  const removeItem = useCallback((id, gender) => {
     setCartItems((prevItems) =>
       prevItems.filter((item) => !(item.id === id && item.gender === gender))
     );
-  };
+  }, []);
+
+  const contextValue = useMemo(
+    () => ({
+      cartItems,
+      cartCount,
+      handleAddToCart,
+      increaseQuantity,
+      decreaseQuantity,
+      removeItem,
+    }),
+    [cartItems, cartCount, handleAddToCart, increaseQuantity, decreaseQuantity, removeItem]
+  );
 
   return (
-    <CartContext.Provider
-      value={{
-        cartItems,
-        cartCount,
-        handleAddToCart,
-        increaseQuantity,
-        decreaseQuantity,
-        removeItem,
-      }}
-    >
+    <CartContext.Provider value={contextValue}>
       {children}
     </CartContext.Provider>
   );
