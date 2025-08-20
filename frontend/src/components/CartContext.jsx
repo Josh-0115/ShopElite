@@ -8,6 +8,7 @@ export const CartProvider = ({ children }) => {
     return savedCart ? JSON.parse(savedCart) : [];
   });
   const [cartCount, setCartCount] = useState(0);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
@@ -18,11 +19,11 @@ export const CartProvider = ({ children }) => {
   const handleAddToCart = useCallback((product) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find(
-        (item) => item.id === product.id && item.gender === product.gender
+        (item) => item.id === product._id && item.gender === product.gender
       );
       if (existingItem) {
         return prevItems.map((item) =>
-          item.id === product.id && item.gender === product.gender
+          item.id === product._id && item.gender === product.gender
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
@@ -47,7 +48,7 @@ export const CartProvider = ({ children }) => {
         item.id === id && item.gender === gender && item.quantity > 1
           ? { ...item, quantity: item.quantity - 1 }
           : item
-      ).filter((item) => item.quantity > 0) // Remove item if quantity becomes 0
+      ).filter((item) => item.quantity > 0)
     );
   }, []);
 
@@ -57,16 +58,24 @@ export const CartProvider = ({ children }) => {
     );
   }, []);
 
+  const clearCart = useCallback(() => {
+    setCartItems([]);
+    localStorage.removeItem('cartItems');
+  }, []);
+
   const contextValue = useMemo(
     () => ({
       cartItems,
       cartCount,
+      user,
+      setUser,
       handleAddToCart,
       increaseQuantity,
       decreaseQuantity,
       removeItem,
+      clearCart,
     }),
-    [cartItems, cartCount, handleAddToCart, increaseQuantity, decreaseQuantity, removeItem]
+    [cartItems, cartCount, user, handleAddToCart, increaseQuantity, decreaseQuantity, removeItem, clearCart]
   );
 
   return (

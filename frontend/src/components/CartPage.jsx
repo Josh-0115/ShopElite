@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { CartContext } from './CartContext';
 import Header from './Header';
 import Footer from './Footer';
-import BPImg from '../assets/images/suggestion/BluetoothSpeaker.jpg';
-import TMImg from '../assets/images/suggestion/TravelMug.jpg';
-import PCImg from '../assets/images/suggestion/PhoneCase.jpg';
-import WCImg from '../assets/images/suggestion/WirelessCharger.jpg';
+import BPImg from '/images/suggestion/BluetoothSpeaker.jpg';
+import TMImg from '/images/suggestion/TravelMug.jpg';
+import PCImg from '/images/suggestion/PhoneCase.jpg';
+import WCImg from '/images/suggestion/WirelessCharger.jpg';
 
 const CartPage = () => {
     const { cartItems, increaseQuantity, decreaseQuantity, removeItem, handleAddToCart } = useContext(CartContext);
@@ -31,28 +31,28 @@ const CartPage = () => {
     // Dummy product data for the "You might also like" section
     const recommendedProducts = [
         {
-            id: 101,
+            _id: 1001,
             name: "Bluetooth Speaker",
             price: 89.99,
             gender: 'electronics',
             image: BPImg
         },
         {
-            id: 102,
+            _id: 1002,
             name: "Travel Mug",
             price: 129.99,
             gender: 'electronics',
             image: TMImg
         },
         {
-            id: 103,
+            _id: 1003,
             name: "Phone Case",
             price: 349.99,
             gender: 'electronics',
             image: PCImg
         },
         {
-            id: 104,
+            _id: 1004,
             name: "Wireless Charger",
             price: 59.99,
             gender: 'electronics',

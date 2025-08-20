@@ -5,7 +5,7 @@ import Footer from './Footer';
 import Newsletter from './Newsletter';
 import { useContext } from 'react';
 import { CartContext } from './CartContext';
-import womenbg from '../assets/images/women/women-bg.jpg'
+import womenbg from '/images/women/women-bg.jpg'
 
 
 const WomensLandingPage = () => {
@@ -20,9 +20,14 @@ const WomensLandingPage = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:3001/women")
-      .then((res) => res.json())
-      .then((data) => setWomenProducts(data.map(product => ({ ...product, gender: 'women' }))))
+    fetch("https://shopelite-pcva.onrender.com/api/products/women")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return res.json();
+      })
+      .then((data) => setWomenProducts(data))
       .catch((error) => console.error("Error fetching women products:", error));
   }, []);
 
@@ -320,9 +325,9 @@ const WomensLandingPage = () => {
           <div className={`grid ${viewMode === 'grid' ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4' : 'grid-cols-1'} gap-6`}>
             {filteredProducts.map((product) => (
               <div
-                key={`${product.gender}-${product.id}`}
+                key={product._id}
                 className={`bg-white rounded-lg shadow-sm overflow-hidden ${viewMode === 'list' ? 'flex' : ''} border border-gray-100 hover:shadow-md transition-shadow`}
-                onMouseEnter={() => setShowQuickAdd(product.id)}
+                onMouseEnter={() => setShowQuickAdd(product._id)}
                 onMouseLeave={() => setShowQuickAdd(null)}
               >
                 <div className={`relative ${viewMode === 'list' ? 'w-1/3' : ''}`}>
@@ -339,7 +344,7 @@ const WomensLandingPage = () => {
                   {product.isBestSeller && (
                     <span className="absolute top-2 right-2 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded">BEST SELLER</span>
                   )}
-                  {showQuickAdd === product.id && (
+                  {showQuickAdd === product._id && (
                     <div className="absolute inset-0 bg-black/70 bg-opacity-40 flex items-center justify-center">
                       <button
                         onClick={(e) => {
@@ -402,9 +407,9 @@ const WomensLandingPage = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {newArrivals.map((product) => (
               <div
-                key={`${product.gender}-${product.id}`}
+                key={product._id}
                 className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100 hover:shadow-md transition-shadow"
-                onMouseEnter={() => setShowQuickAdd(product.id)}
+                onMouseEnter={() => setShowQuickAdd(product._id)}
                 onMouseLeave={() => setShowQuickAdd(null)}
               >
                 <div className="relative">
@@ -418,7 +423,7 @@ const WomensLandingPage = () => {
                   {product.isNew && (
                     <span className="absolute top-2 left-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">NEW</span>
                   )}
-                  {showQuickAdd === product.id && (
+                  {showQuickAdd === product._id && (
                     <div className="absolute inset-0 bg-black/70 bg-opacity-40 flex items-center justify-center">
                       <button
                         onClick={() => handleAddToCart(product)}
@@ -455,9 +460,9 @@ const WomensLandingPage = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {trending.map((product) => (
               <div
-                key={`${product.gender}-${product.id}`}
+                key={product._id}
                 className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100 hover:shadow-md transition-shadow"
-                onMouseEnter={() => setShowQuickAdd(product.id)}
+                onMouseEnter={() => setShowQuickAdd(product._id)}
                 onMouseLeave={() => setShowQuickAdd(null)}
               >
                 <div className="relative">
@@ -471,7 +476,7 @@ const WomensLandingPage = () => {
                   {product.isBestSeller && (
                     <span className="absolute top-2 right-2 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded">BEST SELLER</span>
                   )}
-                  {showQuickAdd === product.id && (
+                  {showQuickAdd === product._id && (
                     <div className="absolute inset-0 bg-black/70 bg-opacity-40 flex items-center justify-center">
                       <button
                         onClick={() => handleAddToCart(product)}
@@ -508,9 +513,9 @@ const WomensLandingPage = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {bestSellers.map((product) => (
               <div
-                key={`${product.gender}-${product.id}`}
+                key={product._id}
                 className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100 hover:shadow-md transition-shadow"
-                onMouseEnter={() => setShowQuickAdd(product.id)}
+                onMouseEnter={() => setShowQuickAdd(product._id)}
                 onMouseLeave={() => setShowQuickAdd(null)}
               >
                 <div className="relative">
@@ -524,7 +529,7 @@ const WomensLandingPage = () => {
                   {product.isBestSeller && (
                     <span className="absolute top-2 right-2 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded">BEST SELLER</span>
                   )}
-                  {showQuickAdd === product.id && (
+                  {showQuickAdd === product._id && (
                     <div className="absolute inset-0 bg-black/70 bg-opacity-40 flex items-center justify-center">
                       <button
                         onClick={() => handleAddToCart(product)}
@@ -561,9 +566,9 @@ const WomensLandingPage = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {seasonal.map((product) => (
               <div
-                key={`${product.gender}-${product.id}`}
+                key={product._id}
                 className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100 hover:shadow-md transition-shadow"
-                onMouseEnter={() => setShowQuickAdd(product.id)}
+                onMouseEnter={() => setShowQuickAdd(product._id)}
                 onMouseLeave={() => setShowQuickAdd(null)}
               >
                 <div className="relative">
@@ -577,7 +582,7 @@ const WomensLandingPage = () => {
                   {product.isNew && (
                     <span className="absolute top-2 left-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">NEW</span>
                   )}
-                  {showQuickAdd === product.id && (
+                  {showQuickAdd === product._id && (
                     <div className="absolute inset-0 bg-black/70 bg-opacity-40 flex items-center justify-center">
                       <button
                         onClick={() => handleAddToCart(product)}

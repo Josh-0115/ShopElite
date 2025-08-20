@@ -1,34 +1,34 @@
 import React, { useState, useContext } from 'react';
 import { CartContext } from './CartContext'; // Import CartContext
-import PWHImg from '../assets/images/newarrival/Headphones.jpg';
-import SFWImg from '../assets/images/newarrival/Watch.jpg';
-import DLBImg from '../assets/images/newarrival/Bag.jpg';
-import PCMImg from '../assets/images/newarrival/Coffee.jpg';
+import PWHImg from '/images/newarrival/Headphones.jpg';
+import SFWImg from '/images/newarrival/Watch.jpg';
+import DLBImg from '/images/newarrival/Bag.jpg';
+import PCMImg from '/images/newarrival/Coffee.jpg';
 
 const newArrivals = [
   {
-    id: 1,
+    _id: 2001,
     name: 'Premium Wireless Headphones',
     price: 299.99,
     image: PWHImg,
     gender: 'electronics' // Add gender for cart uniqueness
   },
   {
-    id: 2,
+    _id: 2002,
     name: 'Smart Fitness Watch',
     price: 199.99,
     image: SFWImg,
     gender: 'electronics'
   },
   {
-    id: 3,
+    _id: 2003,
     name: 'Designer Leather Bag',
     price: 449.99,
     image: DLBImg,
     gender: 'accessories'
   },
   {
-    id: 4,
+    _id: 2004,
     name: 'Premium Coffee Maker',
     price: 179.99,
     image: PCMImg,

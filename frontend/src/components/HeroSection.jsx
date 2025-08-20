@@ -1,5 +1,5 @@
 import React from 'react';
-import homebg from '../assets/images/home/Homebg.jpg'
+import homebg from '/images/home/Homebg.jpg'
 
 const HeroSection = () => {
   return (

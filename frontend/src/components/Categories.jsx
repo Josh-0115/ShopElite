@@ -1,8 +1,8 @@
 import React from 'react';
-import EGImg from '../assets/images/home/Electronics&Gadgets.jpg';
-import FAImg from '../assets/images/home/Fashion&Accessories.jpg';
-import HLImg from '../assets/images/home/Home&Living.jpg';
-import SFImg from '../assets/images/home/Sports&Fitness.jpg';
+import EGImg from '/images/home/Electronics&Gadgets.jpg';
+import FAImg from '/images/home/Fashion&Accessories.jpg';
+import HLImg from '/images/home/Home&Living.jpg';
+import SFImg from '/images/home/Sports&Fitness.jpg';
 
 const categories = [
   {

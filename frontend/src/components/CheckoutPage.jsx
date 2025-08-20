@@ -1,39 +1,62 @@
 import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CartContext } from './CartContext';
 import Header from './Header';
 import Footer from './Footer';
 
 const CheckoutPage = () => {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems, clearCart, user } = useContext(CartContext);
+  const navigate = useNavigate();
   const [billingInfo, setBillingInfo] = useState({
-    fullName: '',
-    streetAddress: '',
-    apartment: '',
-    city: '',
-    state: '',
-    zipCode: '',
-    country: 'United States',
-    phone: '',
+    fullName: '', streetAddress: '', apartment: '', city: '', state: '', zipCode: '', country: 'United States', phone: '',
   });
   const [paymentMethod, setPaymentMethod] = useState('credit-card');
   const [orderPlaced, setOrderPlaced] = useState(false);
+  const [error, setError] = useState('');
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setBillingInfo({ ...billingInfo, [name]: value });
+    setBillingInfo({ ...billingInfo, [e.target.name]: e.target.value });
   };
 
   const handlePaymentMethodChange = (method) => {
     setPaymentMethod(method);
   };
 
-  const handlePlaceOrder = () => {
-    setOrderPlaced(true);
+  const handlePlaceOrder = async () => {
+    if (!user) {
+      setError('Please sign in to place an order');
+      return;
+    }
+    try {
+      const response = await fetch('https://shopelite-pcva.onrender.com/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({
+          items: cartItems.map(item => ({
+            product: item._id || item.id,
+            quantity: item.quantity,
+            price: item.price,
+          })),
+          totalAmount: totalAmount,
+        }),
+      });
+      if (response.ok) {
+        setOrderPlaced(true);
+        clearCart();
+      } else {
+        const data = await response.json();
+        setError(data.message);
+      }
+    } catch (err) {
+      setError('Failed to place order');
+    }
   };
 
   const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  const shipping = subtotal > 500 ? 0 : 29.99;
+  const shipping = cartItems.length === 0 ? 0 : subtotal > 500 ? 0 : 29.99;
   const totalAmount = subtotal + shipping;
 
   return (
@@ -69,6 +92,12 @@ const CheckoutPage = () => {
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div className="space-y-8">
+              {error && <p className="text-red-500">{error}</p>}
+              {!user && (
+                <p className="text-gray-600">
+                  Please <Link to="/signin" className="text-blue-600 hover:text-blue-700">sign in</Link> to place an order.
+                </p>
+              )}
               <section className="bg-white rounded-lg shadow-sm p-6">
                 <h2 className="text-xl font-semibold text-gray-900 mb-6">Billing Address</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -237,7 +266,7 @@ const CheckoutPage = () => {
                     <p className="text-gray-500">Your cart is empty.</p>
                   ) : (
                     cartItems.map(item => (
-                      <div key={`${item.gender}-${item.id}`} className="flex items-center space-x-4">
+                      <div key={item._id} className="flex items-center space-x-4">
                         <div className="flex-shrink-0 w-16 h-16 bg-gray-100 rounded-lg overflow-hidden">
                           <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                         </div>
@@ -256,10 +285,12 @@ const CheckoutPage = () => {
                     <span>Subtotal</span>
                     <span>${subtotal.toFixed(2)}</span>
                   </div>
-                  <div className="flex justify-between text-gray-600">
-                    <span>Shipping</span>
-                    <span>{shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}</span>
-                  </div>
+                  {cartItems.length > 0 && (
+                    <div className="flex justify-between text-gray-600">
+                      <span>Shipping</span>
+                      <span>{shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}</span>
+                    </div>
+                  )}
                   <div className="flex justify-between text-lg font-semibold text-gray-900">
                     <span>Total</span>
                     <span>${totalAmount.toFixed(2)}</span>
