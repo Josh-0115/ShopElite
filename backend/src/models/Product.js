@@ -12,7 +12,7 @@ const productSchema = new mongoose.Schema({
   subcategory: String,
   brand: String,
   gender: { type: String, index: true },
-  isNew: Boolean,
+  isNewlyAdded: Boolean,
   isBestSeller: Boolean,
   image: { type: String, required: true },   // e.g. "/images/women/w4.jpg"
   images: [String],
