@@ -7,28 +7,28 @@ import PCMImg from '/images/newarrival/Coffee.jpg';
 
 const newArrivals = [
   {
-    _id: 2001,
+    id: 2001,
     name: 'Premium Wireless Headphones',
     price: 299.99,
     image: PWHImg,
     gender: 'electronics' // Add gender for cart uniqueness
   },
   {
-    _id: 2002,
+    id: 2002,
     name: 'Smart Fitness Watch',
     price: 199.99,
     image: SFWImg,
     gender: 'electronics'
   },
   {
-    _id: 2003,
+    id: 2003,
     name: 'Designer Leather Bag',
     price: 449.99,
     image: DLBImg,
     gender: 'accessories'
   },
   {
-    _id: 2004,
+    id: 2004,
     name: 'Premium Coffee Maker',
     price: 179.99,
     image: PCMImg,
