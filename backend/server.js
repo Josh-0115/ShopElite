@@ -12,7 +12,8 @@ connectDB();
 
 const app = express();
 app.use(cors({
-  origin: ["https://shopelite.vercel.app"], 
+  origin: "https://shopelite.vercel.app", 
+  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
 app.use(express.json());
