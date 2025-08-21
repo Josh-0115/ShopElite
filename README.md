@@ -1,12 +1,79 @@
-# React + Vite
+**🛍️ ShopElite**
+-
+ShopElite is a full-stack e-commerce web application built with React (Vite) for the frontend and Node.js + Express + MongoDB for the backend.
+It provides a modern shopping experience with authentication, product filtering, cart management, and checkout flow.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+***🚀 Features***
+-
+**👥 User**
+  - Register & Login with JWT authentication
+  - Persistent login (session stored in localStorage)
+  - View products by category (Men, Women, Home)
+  - Search, sort & filter products
+  - Add/Remove products from cart
+  - Proceed to checkout
+    
+**🛒 Cart**
+  - Global cart (shared across Men/Women/Home pages)
+  - Add items with "Quick Add"
+  - View cart details in a dedicated Cart page
+  - Cart items persist across navigation
+    
+**🖼️ Products**
+  - Responsive product cards with hover effects
+  - API-based product data served from backend
+  - Men & Women products managed via JSON DB
+    
+**🔧 Tech Stack**
+  - Frontend: React (Vite), TailwindCSS
+  - Backend: Node.js, Express.js
+  - Database: MongoDB
+  - Auth: JWT (JSON Web Token)
+  - Hosting: Vercel (frontend), Render (backend)
 
-Currently, two official plugins are available:
+⚙️ Installation & Setup
+-
+1️⃣ Clone the repo
+```bash
+git clone https://github.com/Josh-0115/ShopElite.git
+cd ShopElite
+```
+2️⃣ Backend Setup
+```bash
+cd backend
+npm install
+```
+ - Create a `.env` file in `backend/` with:
+   ```bash
+   MONGO_URI=your_mongodb_connection_string
+   JWT_SECRET=your_secret_key
+   PORT=3001
+   ```
+ - Run backend:
+   ```bash
+   npm start
+   ```
+3️⃣ Frontend Setup
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🌍 Deployment
+-
+  - Frontend → Vercel
+  - Backend → Render
 
-## Expanding the ESLint configuration
+🤝 Contributing
+-
+Contributions are welcome! Feel free to fork the repo and create a pull request.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+📜 License
+-
+This project is licensed under the MIT License.
+
+👨‍💻 Author
+-
+Developed by ``Josh-0115`` ✨
+
